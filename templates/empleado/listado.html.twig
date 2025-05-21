@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Empleados{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Listado de Empleados</h1>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Puesto</th>
+                <th>Departamento</th>
+                <th>Dirección</th>
+                <th>Provincia</th>
+                <th>País</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in empleados %}
+                <tr>
+                    <td>{{ emp.nombre }}</td>
+                    <td>{{ emp.apellido }}</td>
+                    <td>{{ emp.puesto }}</td>
+                    <td>{{ emp.departamento }}</td>
+                    <td>{{ emp.direccion }}</td>
+                    <td>{{ emp.provincia }}</td>
+                    <td>{{ emp.pais }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">No hay empleados registrados.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

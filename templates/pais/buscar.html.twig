@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Buscar País{% endblock %}
+
+{% block body %}
+    <h1>Buscar un país</h1>
+
+    {{ form_start(form_buscar) }}
+        {{ form_row(form_buscar.nombre) }}
+        <button class="btn btn-primary">Buscar</button>
+    {{ form_end(form_buscar) }}
+
+    {% if paises is defined %}
+        <h2>Resultados:</h2>
+        <ul>
+            {% for pais in paises %}
+                <li>{{ pais.nombre }}</li>
+            {% else %}
+                <li>No se encontraron países.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+

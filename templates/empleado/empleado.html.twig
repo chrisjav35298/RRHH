@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Empleados{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Listado de Empleados</h1>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Puesto</th>
+                <th>Departamento</th>
+                <th>Dirección</th>
+                <th>Provincia</th>
+                <th>País</th>
+            </tr>
+        </thead>
+        <tbody>
+           {% for empleado in empleadoInfo %}
+  <p>Nombre: {{ empleado.nombre }} {{ empleado.apellido }}</p>
+  <p>Puesto: {{ empleado.puesto }}</p>
+  <p>Departamento: {{ empleado.departamento }}</p>
+  <p>Dirección: {{ empleado.direccion }}</p>
+  <p>Provincia: {{ empleado.provincia }}</p>
+  <p>País: {{ empleado.pais }}</p>
+{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
