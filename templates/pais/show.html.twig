@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalle del País{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Detalle del País</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Información del país</h5>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>ID:</strong> {{ pais.id }}</li>
+                <li class="list-group-item"><strong>Nombre:</strong> {{ pais.nombre }}</li>
+            </ul>
+
+            <a href="{{ path('app_pais_edit', {'id': pais.id}) }}" class="btn btn-primary mt-3">Editar</a>
+            <a href="{{ path('pais_index') }}" class="btn btn-secondary mt-3">Volver al listado</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

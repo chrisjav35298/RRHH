@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Buscar Puestos{% endblock %}
+
+{% block body %}
+    <h1>Buscar un puesto</h1>
+
+    {{ form_start(form_buscar) }}
+        {{ form_row(form_buscar.nombre) }}
+        <button class="btn btn-primary">Buscar</button>
+    {{ form_end(form_buscar) }}
+
+    {% if puestos is defined %}
+        <h2>Resultados:</h2>
+        <ul>
+            {% for puesto in puestos %}
+                <li>{{ puesto.nombre }}</li>
+            {% else %}
+                <li>No se encontraron puestos.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+

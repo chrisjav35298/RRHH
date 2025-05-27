@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pais nuevo{% endblock %}
+
+{% block body %}
+    <h1>Crear nuevo Puesto</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+
+
+{# <div class="form-group">
+    {{ form_label(form.nombre, 'Nombre del país') }}
+    {{ form_widget(form.nombre, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.nombre) }}
+</div> #}
+
+    <a href="{{ path('puesto_index') }}">back to ìndice Puestos</a>
+{% endblock %}

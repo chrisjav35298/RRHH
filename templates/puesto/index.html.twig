@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pais index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Puesto</h1>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Salario minimo</th>
+                <th>Salario maximo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for puesto in puestos %}
+            <tr>
+                <td>{{ puesto.id }}</td>
+                <td>{{ puesto.nombre }}</td>
+                <td>{{ puesto.salarioMinimo }}</td>
+                <td>{{ puesto.salarioMaximo }}</td>
+                <td>
+                    {# <a href="{{ path('app_pais_show', {'id': puesto.id}) }}">show</a>
+                    <a href="{{ path('app_pais_edit', {'id': puesto.id}) }}">edit</a> #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_puesto_new') }}">Create nuevo puesto</a>
+</div>
+</div>
+{% endblock %}
