@@ -46,8 +46,8 @@ final class PaisController extends AbstractController
     #[Route('/pais/{id}/edit', name: 'app_pais_edit')]
     public function edit(Request $request, EntityManagerInterface $entityManager, Pais $pais): Response
     {  
-        $form = $this->createForm(PaisType::class, $pais); 
-        $form->handleRequest($request);
+        $form = $this->createForm(PaisType::class, $pais);  
+        $form->handleRequest($request); dd($form->getData());
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($pais);
             $entityManager->flush();

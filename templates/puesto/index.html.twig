@@ -25,8 +25,8 @@
                 <td>{{ puesto.salarioMinimo }}</td>
                 <td>{{ puesto.salarioMaximo }}</td>
                 <td>
-                    {# <a href="{{ path('app_pais_show', {'id': puesto.id}) }}">show</a>
-                    <a href="{{ path('app_pais_edit', {'id': puesto.id}) }}">edit</a> #}
+                    <a href="{{ path('app_puesto_show', {'id': puesto.id}) }}">show</a>
+                    <a href="{{ path('app_puesto_edit', {'id': puesto.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

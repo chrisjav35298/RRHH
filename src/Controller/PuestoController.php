@@ -43,12 +43,12 @@ final class PuestoController extends AbstractController
         ]);
     }
 
-    #[Route('/puesto/{id}/show', name: 'app_puesto_show')]
-    public function show(Request $request, EntityManagerInterface $entityManager,Puesto $puesto): Response
-    {
+    #[Route('/puesto/{id}/edit', name: 'app_puesto_edit')]
+    public function edit(Request $request, EntityManagerInterface $entityManager,Puesto $puesto): Response
+    { 
       
         $form = $this->createForm(PuestoType::class, $puesto); 
-        $form->handleRequest($request);
+        $form->handleRequest($request); 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($puesto);
             $entityManager->flush();
@@ -56,10 +56,18 @@ final class PuestoController extends AbstractController
             return $this->redirectToRoute('puesto_index', [], Response::HTTP_SEE_OTHER);
         }
         
-        return $this->render('puesto/show.html.twig', [
+        return $this->render('puesto/edit.html.twig', [
             'form' => $form->createView(),
             'pais' => $puesto ,
 
+        ]);
+    }
+
+    #[Route('/puesto/{id}/show', name: 'app_puesto_show')]
+    public function show(Puesto $puesto): Response
+    {
+        return $this->render('puesto/show.html.twig', [
+            'puesto' => $puesto,
         ]);
     }
 
