@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pais;
 use App\Form\PaisType;
+use App\Entity\Provincia;
 use App\Repository\PaisRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,7 @@ final class PaisController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $pais = new Pais();
+        $pais->addProvincia(new Provincia()); //esta linea la necesitamos por si en la BD no hay prov aún
         $form = $this->createForm(PaisType::class, $pais); 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -35,7 +37,6 @@ final class PaisController extends AbstractController
 
             return $this->redirectToRoute('pais_index', [], Response::HTTP_SEE_OTHER);
         }
-        
         return $this->render('pais/new.html.twig', [
             'form' => $form->createView(),
             'pais' => $pais,
@@ -43,15 +44,14 @@ final class PaisController extends AbstractController
         ]);
     }
 
+
     #[Route('/pais/{id}/edit', name: 'app_pais_edit')]
     public function edit(Request $request, EntityManagerInterface $entityManager, Pais $pais): Response
     {  
         $form = $this->createForm(PaisType::class, $pais);  
-        $form->handleRequest($request); dd($form->getData());
+        $form->handleRequest($request); 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($pais);
             $entityManager->flush();
-
             return $this->redirectToRoute('pais_index', [], Response::HTTP_SEE_OTHER);
         }
         

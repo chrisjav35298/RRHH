@@ -21,12 +21,17 @@ class Pais
     /**
      * @var Collection<int, Provincia>
      */
-    #[ORM\OneToMany(targetEntity: Provincia::class, mappedBy: 'pais')]
+    #[ORM\OneToMany(targetEntity: Provincia::class, mappedBy: 'pais', cascade:['persist','remove'],orphanRemoval: true)]
     private Collection $provincias;
 
     public function __construct()
     {
         $this->provincias = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->nombre;
     }
 
     public function getId(): ?int

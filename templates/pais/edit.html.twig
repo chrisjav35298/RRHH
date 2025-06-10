@@ -1,14 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Pais nuevo{% endblock %}
-
+{% block title %}Editar{% endblock %}
 {% block body %}
-    <h1>Crear nuevo pais</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-primary">{{ button_label|default('Actualizar') }}</button>
-    {{ form_end(form) }}
+<div class="container">     <h1>Editar</h1>
+{{ form_start(form) }}
+    {{ form_row(form.nombre) }}
+        <div id="provincias-collection"
+            data-prototype="{{ form_widget(form.provincias.vars.prototype)|e('html_attr') }}"
+            data-index="{{ form.provincias|length }}">
+                {% for provinciaForm in form.provincias %}
+                    <div class="provincia-item">
+                        {{ form_widget(provinciaForm) }}
+                        <button type="button" class="remove-province">Eliminar</button>
+                    </div>
+                {% endfor %}
+        </div>
+        <button type="button" id="add-province" class="btn btn-primary btn-xs m-2">Agregar provincia</button>
+        <button type="submit" class="btn btn-success btn-xs m-2">Guardar</button>
+{{ form_end(form) }}
 
     <a href="{{ path('pais_index') }}">back to list</a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.getElementById('provincias-collection');
+        const addBtn = document.getElementById('add-province');
+        let index = parseInt(container.dataset.index);
+
+        addBtn.addEventListener('click', function () {
+            const prototype = container.dataset.prototype;
+            const newForm = prototype.replace(/__name__/g, index);
+            const div = document.createElement('div');
+            div.classList.add('provincia-item');
+            div.innerHTML = newForm + '<button type="button" class="remove-province">Eliminar</button>';
+            container.appendChild(div);
+            index++;
+        });
+
+        container.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('remove-province')) {
+                e.target.closest('.provincia-item').remove();
+            }
+        });
+    });
+</script>
+
 {% endblock %}
