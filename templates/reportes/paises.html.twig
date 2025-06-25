@@ -1,0 +1,14 @@
+<h1>Reporte de Provincias por País</h1>
+
+{% for pais in paises %}
+    <h2>{{ pais.nombre }}</h2>
+    <ul>
+        {% for provincia in pais.provincias %}
+            <li>{{ provincia.nombre }}</li>
+        {% else %}
+            <li>No hay provincias asociadas</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No se encontraron países con ese nombre.</p>
+{% endfor %}

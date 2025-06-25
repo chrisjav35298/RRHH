@@ -41,7 +41,9 @@
 
         container.addEventListener('click', function (e) {
             if (e.target && e.target.classList.contains('remove-provincia')) {
-                e.target.closest('.provincia-item').remove();
+                if (confirm("¿Estás seguro de eliminar esta provincia?")) {
+                    e.target.closest('.provincia-item').remove();
+                }
             }
         });
     });

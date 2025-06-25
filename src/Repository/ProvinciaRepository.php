@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Pais;
 use App\Entity\Provincia;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Provincia>
@@ -15,6 +16,39 @@ class ProvinciaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Provincia::class);
     }
+
+
+
+
+    public function filtrar(?Pais $pais, ?int $minPoblacion, ?float $maxSuperficie): array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.pais', 'pais')
+            ->addSelect('pais');
+    
+        if ($pais) {
+            $qb->andWhere('p.pais = :pais')
+                ->setParameter('pais', $pais);
+        }
+    
+        if ($minPoblacion !== null) {
+            $qb->andWhere('p.poblacion >= :minPoblacion')
+                ->setParameter('minPoblacion', $minPoblacion);
+        }
+    
+        if ($maxSuperficie !== null) {
+            $qb->andWhere('p.superficie <= :maxSuperficie')
+                ->setParameter('maxSuperficie', $maxSuperficie);
+        }
+    
+        return $qb->getQuery()->getResult();
+    }
+
+
+
+
+
+
 
     //    /**
     //     * @return Provincia[] Returns an array of Provincia objects
