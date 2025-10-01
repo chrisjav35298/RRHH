@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reporte de Empleados por País{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="card-title text-center mb-2 text-primary">
+                        Empleados por País
+                    </h2>
+                    <p class="text-center text-muted mb-3">
+                        Distribución porcentual de empleados según su país de residencia.
+                    </p>
+                    <canvas id="empleadosPaisChart" style="max-height:350px;"></canvas>
+                </div>
+                <div class="card-footer text-center text-muted small">
+                    Fuente: Base de datos corporativa · Actualizado {{ "now"|date("d/m/Y") }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('empleadosPaisChart');
+    // le enivamos labels y values desde el controlador
+    new Chart(ctx, {
+        type: 'pie',
+        data: {labels: {{ labels|json_encode|raw }}, datasets: [{ label: 'Cantidad de empleados', data: {{ values|json_encode|raw }},
+                backgroundColor: [
+                    '#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0',
+                    '#9966FF', '#FF9F40', '#8BC34A', '#E91E63'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        font: {
+                            size: 13,
+                            family: 'Arial, sans-serif'
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const value = context.raw;
+                            const total = context.chart._metasets[0].total;
+                            const percentage = ((value / total) * 100).toFixed(1);
+                            return `${context.label}: ${value} empleados (${percentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
+

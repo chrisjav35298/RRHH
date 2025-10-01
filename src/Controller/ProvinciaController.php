@@ -115,7 +115,7 @@ final class ProvinciaController extends AbstractController
 
     #[Route('/provincia/exportar/excel', name: 'reporte_excel')]
     public function exportarExcel(Request $request, PaisRepository $paisRepository, ProvinciaRepository $provinciaRepository): StreamedResponse
-    {
+    { dd('/provincia/exportar/excel');
         // Filtros recibidos por GET
         $paisId = $request->query->get('pais');
         $minPoblacion = $request->query->get('minPoblacion');
@@ -169,6 +169,4 @@ final class ProvinciaController extends AbstractController
         return $response;
     }
 
-
-    
 }

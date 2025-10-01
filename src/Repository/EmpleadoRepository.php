@@ -30,50 +30,39 @@ class EmpleadoRepository extends ServiceEntityRepository
             ->getArrayResult();
     }
 
+    public function contarPorDepartamento()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('d.nombre AS departamento, COUNT(e.id) AS cantidad')
+            ->join('e.departamento', 'd')
+            ->groupBy('d.nombre')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    public function contarPorPais()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('pa.nombre AS pais, COUNT(e.id) AS cantidad')
+            ->join('e.departamento', 'd')
+            ->join('d.ubicacion', 'u')
+            ->join('u.provincia', 'pr')
+            ->join('pr.pais', 'pa')
+            ->groupBy('pa.nombre')
+            ->getQuery()
+            ->getArrayResult();
+    }
 
 
+    public function salarioPorPuesto()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('p.nombre AS puesto, AVG(e.salario) AS salario_promedio, COUNT(e.id) AS cantidad')
+            ->join('e.puesto', 'p')
+            ->groupBy('p.nombre')
+            ->orderBy('salario_promedio', 'DESC')
+            ->getQuery()
+            ->getArrayResult();
+    }
 
-
-
-
-
-    // public function obtenerInfo($value)
-    // {
-    //     return $this->createQueryBuilder('e')
-    //         ->addSelect('p', 'd', 'u', 'pr', 'pa')
-    //         ->join('e.puesto', 'p')
-    //         ->join('e.departamento', 'd')
-    //         ->join('d.ubicacion', 'u')
-    //         ->join('u.provincia', 'pr')
-    //         ->join('pr.pais', 'pa')
-    //         ->where('e.id = :id')
-    //         ->setParameter('id', $value)
-    //         ->getQuery()
-    //         ->getResult();
-    // }
-
-    //    /**
-    //     * @return Empleado[] Returns an array of Empleado objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Empleado
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }
