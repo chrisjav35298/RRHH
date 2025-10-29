@@ -17,7 +17,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const ctx = document.getElementById('empleadosDepartamentoChart');
-
+  
+    console.log({{ labels|json_encode|raw }})
+    console.log({{ values|json_encode|raw }})
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -35,7 +37,7 @@
                 ],
                 borderWidth: 1
             }]
-        },
+        }, 
         options: {
             responsive: true,
             maintainAspectRatio: false, // tamaño se puede modificar manualmente
